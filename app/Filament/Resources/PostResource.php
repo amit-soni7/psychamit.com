@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
+
 class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
@@ -39,8 +40,21 @@ class PostResource extends Resource
                         Forms\Components\TextInput::make('slug')
                             ->required()
                             ->maxLength(2048),
+                        Forms\Components\Select::make('choose_editor')
+                            ->label('Editor')
+                            ->options([
+                                'richEditor' => 'Rich Editor',
+                                'markdownEditor' => 'Markdown Editor'
+                            ])
+                            ->default('richEditor')
+                            ->disablePlaceholderSelection()
+                            ->reactive(),
                         Forms\Components\RichEditor::make('body')
-                            ->required(),
+                            ->required()
+                            ->hidden(fn (Closure $get) => $get('choose_editor') == 'markdownEditor'),
+                        Forms\Components\MarkdownEditor::make('body')
+                            ->required()
+                            ->hidden(fn (Closure $get) => $get('choose_editor') == 'richEditor'),
                         Forms\Components\TextInput::make('meta_title')
                             ->maxLength(255),
                         Forms\Components\Textarea::make('meta_description')
