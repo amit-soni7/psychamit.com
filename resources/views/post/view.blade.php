@@ -9,7 +9,7 @@
                         <a href="#" class="text-blue-700 text-sm font-bold uppercase">
                             {{$category->title}}
                         </a>
-                    @endforeach
+                    @endif
                 </div>
                 <h1 class="text-5xl font-bold hover:text-gray-700 py-4">
                     {{$post->title}}
@@ -27,10 +27,7 @@
                 <div class="flex flex-col">
                     {!! $post->body !!}
                 </div>
-
-                <livewire:upvote-downvote :post="$post" />
             </div>
-        </article>
 
         <div class="w-full flex pt-6">
             <div class="w-1/2">
